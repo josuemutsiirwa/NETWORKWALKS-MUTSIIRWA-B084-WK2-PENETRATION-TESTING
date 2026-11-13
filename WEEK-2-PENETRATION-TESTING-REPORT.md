@@ -1,7 +1,35 @@
 
+<div align="center">
+
 # PENETRATION TESTING REPORT
 
-## WEEK 2 – CYBERSECURITY INTERNSHIP
+### FOOTPRINTING, RECONNAISSANCE AND NETWORK SCANNING
+
+**W2-PM-FINAL | NETWORKWALKS CYBERSECURITY INTERNSHIP**
+
+![Cybersecurity](https://img.shields.io/badge/CYBERSECURITY-DC2626?style=for-the-badge)
+![Penetration Testing](https://img.shields.io/badge/PENETRATION_TESTING-111827?style=for-the-badge)
+![NetworkWalks](https://img.shields.io/badge/NETWORKWALKS-2563EB?style=for-the-badge)
+
+![Kali Linux](https://img.shields.io/badge/Kali_Linux-557C94?style=flat-square&logo=kalilinux&logoColor=white)
+![Nmap](https://img.shields.io/badge/Nmap-4682B4?style=flat-square)
+![Zenmap](https://img.shields.io/badge/Zenmap-333333?style=flat-square)
+![DNSRecon](https://img.shields.io/badge/DNSRecon-444444?style=flat-square)
+![VirtualBox](https://img.shields.io/badge/VirtualBox-183A61?style=flat-square&logo=virtualbox&logoColor=white)
+
+**PREPARED BY**
+
+### MUTSIIRWA MATEMBERA JOSUE
+
+**BATCH B084**
+
+[LinkedIn](https://www.linkedin.com/in/josue-matembera-37a269407/) | [GitHub](https://github.com/josuemutsiirwa)
+
+</div>
+
+---
+
+## REPORT INFORMATION
 
 | Report Information | Details |
 |---|---|
@@ -10,238 +38,646 @@
 | Batch | B084 |
 | Date | 13 November 2026 |
 | Modules Completed | W2-PM1 and W2-PM5 |
-| Client/Target | networkwalks.com and Kali VirtualBox Lab Network |
-| Permission Secured | Activities conducted within the assigned training exercise. Written authorization status should be confirmed with the program supervisor. |
+| Primary Target | `networkwalks.com` |
+| Scanning Environment | Kali Linux VirtualBox virtual network |
 | Phases Covered | Footprinting, Reconnaissance, DNS Enumeration and Network Scanning |
+| Report Type | Week 2 Practical Penetration Testing Report |
+
+> **Authorization note:** This report documents the assigned training activities and their observed results. The written authorization status for testing the external domain should be confirmed with the program supervisor. No exploitation or destructive testing was performed.
+
+## TABLE OF CONTENTS
+
+1. [Liability Disclaimer](#1-liability-disclaimer)
+2. [Executive Summary](#2-executive-summary)
+3. [Introduction](#3-introduction)
+4. [Objectives](#4-objectives)
+5. [Tools and Technologies Used](#5-tools-and-technologies-used)
+6. [Methodology and Activities Performed](#6-methodology-and-activities-performed)
+7. [Risk Analysis and Security Observations](#7-risk-analysis-and-security-observations)
+8. [Recommendations](#8-recommendations)
+9. [Limitations of the Assessment](#9-limitations-of-the-assessment)
+10. [Evidence Collected](#10-evidence-collected)
+11. [Conclusion](#11-conclusion)
+12. [Author and Project Information](#12-author-and-project-information)
 
 ---
 
-## 1. LIABILITY DISCLAIMER
+# 1. LIABILITY DISCLAIMER
 
-This report documents cybersecurity practical activities performed as part of the NetworkWalks Week 2 training program.
+This report documents practical cybersecurity activities completed as part of the NetworkWalks Cybersecurity Internship.
 
-The activities were conducted for educational purposes using the assigned training target and a locally configured Kali Linux VirtualBox environment.
+The activities described were conducted for educational and security-learning purposes within the assigned practical scope. Domain reconnaissance used `networkwalks.com` as the assigned training target, while network discovery was restricted to the Kali Linux VirtualBox virtual network used for the laboratory exercise.
 
-No exploitation, destructive testing, or unauthorized access was attempted. The findings represent observations collected during the exercises and should not be interpreted as confirmation of security vulnerabilities.
+No exploitation, unauthorized access, data modification or disruption of services was performed as part of these two modules.
 
-## 2. INTRODUCTION
+The observations in this report should not be interpreted as proof that the target systems contain exploitable vulnerabilities. Any additional testing must be conducted only with appropriate authorization and within an explicitly approved scope.
 
-The purpose of this assessment was to develop practical knowledge of penetration testing techniques, including information gathering, domain reconnaissance, DNS enumeration, website technology identification and network scanning.
+The author accepts responsibility for using the knowledge gained from these exercises ethically and lawfully.
 
-The first module focused on gathering publicly accessible information about `networkwalks.com` using reconnaissance tools.
+# 2. EXECUTIVE SUMMARY
 
-The second module involved network discovery using Nmap and Zenmap within a Kali Linux VirtualBox virtual network.
+This report presents the results of two practical cybersecurity modules completed during Week 2 of the NetworkWalks Cybersecurity Internship.
 
-## 3. TOOLS USED
+The assessment focused on two important areas of penetration testing:
+
+- **W2-PM1 – Footprinting and Reconnaissance:** Information gathering and analysis using six Kali Linux tools.
+- **W2-PM5 – Network Scanning:** Host discovery and network topology visualization using Nmap and Zenmap.
+
+During W2-PM1, the domain `networkwalks.com` was examined using WHOIS, WhatWeb, Nslookup, cURL, WAFW00F and DNSRecon.
+
+The investigation identified Apache and WordPress technologies, resolved the domain to `192.232.216.135`, detected ModSecurity and collected DNS records associated with the domain.
+
+During W2-PM5, Nmap was used to discover active hosts within the `10.0.0.0/24` VirtualBox network. Two active hosts were identified: the virtual network gateway and the Kali Linux virtual machine. Zenmap was also used to visualize the discovered network topology.
+
+The exercises provided practical experience in reconnaissance, DNS analysis, HTTP response inspection, firewall detection and network discovery.
+
+No exploitation was performed, and no confirmed exploitable vulnerability was established.
+
+# 3. INTRODUCTION
+
+Penetration testing is a security assessment process used to evaluate systems, networks and applications for potential security weaknesses.
+
+An important part of this process involves gathering information about a target before conducting more advanced security testing.
+
+During Week 2 of the NetworkWalks Cybersecurity Internship, practical activities focused on reconnaissance, footprinting and network scanning.
+
+The first module, W2-PM1, involved using multiple Kali Linux tools to collect publicly available information about `networkwalks.com`. The exercise covered domain registration, website technologies, DNS infrastructure, HTTP response headers and web application firewall detection.
+
+The second module, W2-PM5, involved network discovery using Nmap and Zenmap. The objective was to identify active hosts within the Kali Linux VirtualBox virtual network and generate a visual network topology.
+
+This report documents the methodology, commands, observations, potential security implications, recommendations and evidence collected during both modules.
+
+# 4. OBJECTIVES
+
+The main objectives of the Week 2 practical exercises were:
+
+1. Understand the fundamentals of footprinting and reconnaissance.
+2. Retrieve publicly available domain registration information using WHOIS.
+3. Identify website technologies using WhatWeb.
+4. Understand DNS resolution using Nslookup.
+5. Examine HTTP response headers using cURL.
+6. Detect web application firewall technologies using WAFW00F.
+7. Enumerate DNS records using DNSRecon.
+8. Perform network host discovery using Nmap.
+9. Visualize network topology using Zenmap.
+10. Document technical findings and identify areas requiring further security review.
+
+# 5. TOOLS AND TECHNOLOGIES USED
 
 | Tool | Purpose |
 |---|---|
-| WHOIS | Retrieve domain registration information |
-| WhatWeb | Identify website technologies |
-| Nslookup | Perform DNS resolution |
-| cURL | Retrieve HTTP response headers |
-| WAFW00F | Identify web application firewall technologies |
-| DNSRecon | Perform DNS enumeration |
-| Nmap | Discover active hosts on a network |
-| Zenmap | Provide a graphical interface for network scanning and topology visualization |
-| Kali Linux | Penetration testing environment |
+| Kali Linux | Operating system used for cybersecurity activities |
+| WHOIS | Retrieves domain registration information |
+| WhatWeb | Identifies website technologies and components |
+| Nslookup | Performs DNS queries and domain resolution |
+| cURL | Retrieves HTTP responses and headers |
+| WAFW00F | Detects web application firewall technologies |
+| DNSRecon | Performs DNS enumeration |
+| Nmap | Performs network discovery and host identification |
+| Zenmap | Graphical interface for Nmap and topology visualization |
+| Oracle VirtualBox | Provides the virtual laboratory environment |
 
-## 4. ACTIVITIES PERFORMED
+# 6. METHODOLOGY AND ACTIVITIES PERFORMED
 
-### 4.1 Footprinting and Reconnaissance (W2-PM1)
+## 6.1 W2-PM1 – FOOTPRINTING AND RECONNAISSANCE
 
-The target domain used for this exercise was `networkwalks.com`.
+### Target Information
 
-**1. WHOIS – Domain Registration Information**
+The target domain used for this practical exercise was:
 
-WHOIS was used to retrieve publicly available domain registration information.
+`networkwalks.com`
 
-The results showed that the domain was registered through GoDaddy, with a creation date of 6 November 2019 and an expiry date of 6 November 2027.
+Six Kali Linux tools were used to gather different categories of publicly available information.
 
-The domain uses HostGator nameservers, and its WHOIS registration information is privacy protected. The WHOIS result indicated that DNSSEC was unsigned.
+### 6.1.1 WHOIS – Domain Registration Information
 
-**2. WhatWeb – Website Technology Identification**
+**Command executed:**
 
-WhatWeb was used to identify technologies used by the target website.
+```bash
+whois networkwalks.com
+```
 
-The scan identified Apache as the web server and WordPress 7.1.4 as the content management system. It also identified WordPress Download Manager 3.3.76 and jQuery 3.7.1.
+**Purpose:**
 
-The website returned HTTP status 200, indicating that the request was successful.
+WHOIS retrieves publicly available domain registration information, including the registrar, registration dates, expiry dates and authoritative name servers.
 
-**3. Nslookup – DNS Resolution**
+**Observations:**
 
-Nslookup was used to resolve the target domain into its IP address.
+The WHOIS query returned the following information:
 
-The domain resolved to:
+| Information | Result |
+|---|---|
+| Registrar | GoDaddy |
+| Creation Date | 6 November 2019 |
+| Expiration Date | 6 November 2027 |
+| DNSSEC | Unsigned |
+| Nameservers | `NS6135.HOSTGATOR.COM` and `NS6136.HOSTGATOR.COM` |
+| Registration Privacy | Enabled |
 
-- IP Address: `192.232.216.135`
-- DNS Server: `8.8.8.8`
+**Security relevance:**
 
-This demonstrated how DNS translates a domain name into an IP address.
+Domain registration information helps security professionals understand the administrative and DNS infrastructure associated with a domain.
 
-**4. cURL – HTTP Response Headers**
+Nameserver information can also support further DNS investigation.
 
-The cURL command was used to retrieve the HTTP response headers from the website.
+The availability of registration information is not itself a vulnerability, but it contributes to the information that can be collected during reconnaissance.
 
-The server returned an HTTP 200 OK response. The response identified Apache as the web server and included headers such as Content-Type, Referrer-Policy and Permissions-Policy.
+**Evidence – Figure 1: WHOIS Domain Registration**
 
-The response also exposed a WordPress REST API reference through a Link header. This is an observation and does not by itself establish a vulnerability.
+![WHOIS Domain Registration](W2-PM1/screenshots/01-whois.png)
 
-**5. WAFW00F – Web Application Firewall Detection**
+### 6.1.2 WhatWeb – Website Technology Identification
 
-WAFW00F was used to identify whether a web application firewall was protecting the target website.
+**Command executed:**
 
-The tool detected ModSecurity (SpiderLabs).
+```bash
+whatweb https://networkwalks.com
+```
 
-This indicates that a web application firewall technology was detected during the test.
+**Purpose:**
 
-**6. DNSRecon – DNS Enumeration**
+WhatWeb identifies technologies used by websites, including web servers, content management systems, frameworks, libraries and other detectable components.
 
-DNSRecon was used to collect DNS records associated with the target domain.
+**Observations:**
 
-The enumeration identified SOA, NS, MX, A, TXT and SRV records.
+The scan identified the following technologies and information:
 
-The results also exposed a DNS server version string: BIND 9.16.23-RH. The DNSSEC query did not return an answer, which was consistent with the unsigned status observed in WHOIS.
+| Component | Detected Information |
+|---|---|
+| HTTP Response | `200 OK` |
+| Web Server | Apache |
+| CMS | WordPress 7.1.4 |
+| Plugin | WordPress Download Manager 3.3.76 |
+| JavaScript Library | jQuery 3.7.1 |
+| Server IP | `192.232.216.135` |
+| Website Title | Networkwalks Academy |
 
-A total of eight DNS records were enumerated.
+**Security relevance:**
 
-### 4.2 Network Scanning with Zenmap (W2-PM5)
+Technology identification helps security professionals understand the software components used by a web application.
 
-The second practical exercise involved discovering active hosts within the Kali Linux VirtualBox virtual network.
+Identified software versions can be compared with reliable security advisories to determine whether further investigation is necessary.
 
-The network range scanned was:
+However, detecting a software version does not establish that it is vulnerable. Verification would require checking the exact component, configuration, patch status and applicable security advisories.
 
-`10.0.0.0/24`
+**Evidence – Figure 2: WhatWeb Technology Identification**
 
-The Nmap command used was:
+![WhatWeb Technology Identification](W2-PM1/screenshots/02-whatweb.png)
+
+### 6.1.3 Nslookup – DNS Resolution
+
+**Command executed:**
+
+```bash
+nslookup networkwalks.com
+```
+
+**Purpose:**
+
+Nslookup is a DNS query utility used to retrieve information from DNS servers.
+
+It was used to determine the IP address associated with the target domain.
+
+**Observations:**
+
+| Information | Result |
+|---|---|
+| DNS Server | `8.8.8.8` |
+| Resolved IPv4 Address | `192.232.216.135` |
+
+The domain successfully resolved to its associated IPv4 address.
+
+**Security relevance:**
+
+DNS resolution provides information about the IP address associated with a domain.
+
+This information can help security professionals understand where a web service is hosted and support further infrastructure investigation.
+
+Public DNS resolution is normal website behavior and is not, by itself, a security vulnerability.
+
+**Evidence – Figure 3: Nslookup DNS Resolution**
+
+![Nslookup DNS Resolution](W2-PM1/screenshots/03-nslookup.png)
+
+### 6.1.4 cURL – HTTP Response Header Analysis
+
+**Command executed:**
+
+```bash
+curl -I https://networkwalks.com
+```
+
+**Purpose:**
+
+cURL is a command-line tool used to communicate with web servers.
+
+The `-I` option requests HTTP response headers without downloading the full page content.
+
+**Observations:**
+
+The server returned:
+
+`HTTP/1.1 200 OK`
+
+Additional observations included:
+
+- Server information identifying Apache.
+- Content-Type indicating HTML with UTF-8 encoding.
+- A WordPress REST API reference exposed through the `Link` header: `/wp-json/`.
+- A `__wpdm_client` cookie with Secure and HttpOnly attributes.
+- Additional response and cache-related headers.
+
+**Security relevance:**
+
+HTTP response headers provide useful information about how a web server responds to requests.
+
+They may reveal server technologies, application behavior and available endpoints.
+
+The presence of a WordPress REST API reference does not automatically establish a vulnerability. Its access controls and exposed functionality would require separate authorized testing.
+
+**Evidence – Figure 4: cURL HTTP Response Headers**
+
+![cURL HTTP Headers](W2-PM1/screenshots/04-curl.png)
+
+### 6.1.5 WAFW00F – Web Application Firewall Detection
+
+**Command executed:**
+
+```bash
+wafw00f https://networkwalks.com
+```
+
+**Purpose:**
+
+WAFW00F is used to identify whether a website is protected by a Web Application Firewall (WAF).
+
+A WAF helps monitor and filter HTTP traffic according to configured security rules.
+
+**Observations:**
+
+The tool detected:
+
+| Information | Result |
+|---|---|
+| Firewall | ModSecurity |
+| Identification | ModSecurity (SpiderLabs) |
+
+**Security relevance:**
+
+A WAF can help protect web applications by filtering suspicious requests and reducing exposure to certain web-based attacks.
+
+Identifying the technology provides information about the website's security architecture.
+
+However, detection alone does not prove that the WAF is correctly configured or that it blocks every attack.
+
+**Evidence – Figure 5: WAFW00F Firewall Detection**
+
+![WAFW00F Detection](W2-PM1/screenshots/05-wafw00f.png)
+
+### 6.1.6 DNSRecon – DNS Enumeration
+
+**Command executed:**
+
+```bash
+dnsrecon -d networkwalks.com
+```
+
+**Purpose:**
+
+DNSRecon is a DNS enumeration tool used to collect information about a domain's DNS infrastructure.
+
+It can identify records such as A, NS, MX, SOA, TXT and SRV records.
+
+**Observations:**
+
+The enumeration identified:
+
+- SOA records.
+- Authoritative nameserver records.
+- Mail exchange (MX) records.
+- IPv4 address records.
+- TXT records, including SPF-related information.
+- SRV records associated with services such as autodiscover.
+- DNS software version string: `BIND 9.16.23-RH`.
+- DNSSEC query with no answer, consistent with the unsigned status observed in WHOIS.
+
+DNSRecon reported eight records during the enumeration.
+
+**Security relevance:**
+
+DNS records can reveal information about an organization's domain infrastructure, mail services and other network-related services.
+
+This information helps security professionals understand publicly visible DNS configuration and identify records that may require further review.
+
+The discovery of DNS records does not automatically indicate a weakness. Their security significance depends on their configuration and intended purpose.
+
+**Evidence – Figure 6: DNSRecon Enumeration**
+
+![DNSRecon Enumeration](W2-PM1/screenshots/06-dnsrecon.png)
+
+---
+
+## 6.2 W2-PM5 – NETWORK SCANNING USING NMAP AND ZENMAP
+
+### 6.2.1 Overview
+
+The second practical exercise focused on identifying active devices within a network using Nmap and its graphical interface, Zenmap.
+
+The Kali Linux virtual machine was used to perform host discovery on the VirtualBox virtual network.
+
+**Network scope:**
+
+```text
+10.0.0.0/24
+```
+
+This network represents the virtual laboratory environment, not the physical Wi-Fi network.
+
+### 6.2.2 Nmap Host Discovery
+
+**Command executed:**
 
 ```bash
 nmap -sn 10.0.0.0/24
 ```
 
+**Purpose:**
+
+Nmap is a network scanning tool used to discover hosts and examine network services.
+
 The `-sn` option performs host discovery without conducting a port scan.
+
+It helps determine which devices are responding within the specified network range.
+
+**Observations:**
 
 The scan identified two active hosts:
 
-| IP Address | Status | MAC Address |
-|---|---|---|
-| 10.0.0.1 | Up | 52:54:00:12:35:00 |
-| 10.0.0.2 | Up | Not displayed |
-
-The first address represented the virtual network gateway, while the second represented the Kali Linux virtual machine.
-
-Zenmap was also used to visualize the discovered network topology, and the topology was saved as a PDF.
+| IP Address | Status | MAC Address | Identification |
+|---|---|---|---|
+| `10.0.0.1` | Up | `52:54:00:12:35:00` | QEMU virtual NIC / Gateway |
+| `10.0.0.2` | Up | Not displayed | Kali Linux VM |
 
 **Network Scan Summary:**
 
-- Network scanned: `10.0.0.0/24`
-- Total IP addresses scanned: 256
-- Active hosts discovered: 2
-- Scan type: Ping Scan / Host Discovery
-- Port scanning: Not performed
+| Parameter | Result |
+|---|---|
+| Network Range | `10.0.0.0/24` |
+| Total IP Addresses Scanned | 256 |
+| Active Hosts | 2 |
+| Scan Type | Ping Scan / Host Discovery |
+| Port Scanning | Not performed |
 
-**Environment Limitation:**
+**Security relevance:**
 
-The scan was performed within the Kali Linux VirtualBox NAT virtual network. It did not represent a scan of the physical Wi-Fi network or all devices connected to the physical LAN.
+Host discovery helps administrators and security professionals understand which devices are active on a network.
 
-## 5. RISK ANALYSIS / IMPACT
+It can assist with network inventory, identification of unexpected devices and preparation for further authorized security assessments.
 
-The following table summarizes observations made during the exercises. Risk levels are preliminary indicators of potential exposure, not confirmed vulnerability ratings.
+Discovering an active host does not establish that the device is vulnerable. Additional authorized checks would be required to identify running services or security weaknesses.
 
-| No. | Finding / Observation | Evidence / Observation | Potential Impact | Risk Level |
+**Evidence – Figure 7: Nmap Host Discovery**
+
+![Nmap Host Discovery](W2-PM5/screenshots/01-kali-ping-scan.png)
+
+### 6.2.3 Zenmap Network Topology Visualization
+
+**Purpose:**
+
+Zenmap provides a graphical interface for Nmap and makes it easier to view scan results and understand the discovered network environment.
+
+After performing host discovery, the topology view was used to represent the discovered hosts visually.
+
+**Observations:**
+
+The topology represented the discovered devices in the Kali VirtualBox virtual network.
+
+The visualization provided a graphical understanding of the network discovery results.
+
+The topology was saved as a PDF document for documentation and submission.
+
+**Evidence – Figure 8: Zenmap Network Topology**
+
+![Zenmap Network Topology](W2-PM5/screenshots/02-kali-network-topology.png)
+
+**Additional topology document:**
+
+[View W2-PM5 Network Topology PDF](W2-PM5/outputs/W2-PM5-Network-Topology.pdf)
+
+### 6.2.4 Network Scanning Limitations
+
+The scan was restricted to the Kali Linux VirtualBox virtual network rather than the physical Wi-Fi LAN.
+
+The exercise demonstrated host discovery, but it did not include:
+
+- A complete inventory of physical LAN devices.
+- Port scanning or service version detection.
+- Operating system fingerprinting.
+- Vulnerability scanning or exploitation.
+
+These activities would require separate authorized exercises and should not be inferred from the host discovery results.
+
+# 7. RISK ANALYSIS AND SECURITY OBSERVATIONS
+
+The following table summarizes observations made during the practical exercises and their possible security implications.
+
+These are preliminary assessments of potential exposure, not confirmed vulnerabilities or formal vulnerability severity ratings.
+
+| No. | Observation | Evidence | Potential Security Impact | Priority |
 |---|---|---|---|---|
-| 1 | Web technology information | WhatWeb identified Apache and WordPress versions. | Technology information may assist an attacker during reconnaissance. | Low |
-| 2 | DNS server version disclosure | DNSRecon returned a BIND version string. | Version information could help an attacker research possible weaknesses. | Low |
-| 3 | DNSSEC unsigned | WHOIS indicated that DNSSEC was unsigned. | DNS responses may lack DNSSEC-based authenticity validation. | Informational |
-| 4 | WordPress REST API reference | cURL exposed a WordPress REST API reference in the response headers. | Public API information may reveal application endpoints. | Informational |
-| 5 | Web application firewall detected | WAFW00F identified ModSecurity. | This is a security control observed, not a vulnerability. | Informational |
-| 6 | Limited network discovery | Nmap identified two active hosts in the VirtualBox network. | The scan provided visibility only into discovered hosts, not their open ports or services. | Informational |
+| 1 | Website technology information is publicly identifiable. | WhatWeb detected Apache, WordPress and plugin versions. | May help attackers identify software components requiring security review. | Low |
+| 2 | Server IP address is publicly resolvable. | Nslookup returned `192.232.216.135`. | Provides infrastructure information that may support further reconnaissance. | Informational |
+| 3 | HTTP response headers reveal technical information. | cURL returned server and application-related headers. | May assist technology fingerprinting and further enumeration. | Low |
+| 4 | WordPress REST API endpoint is advertised. | cURL exposed `/wp-json/` in the Link header. | May reveal application endpoints and publicly accessible API information. | Informational |
+| 5 | WAF technology is identifiable. | WAFW00F detected ModSecurity (SpiderLabs). | Reveals information about the web application's defensive technology. | Informational |
+| 6 | DNS infrastructure records are publicly available. | DNSRecon identified SOA, NS, MX, TXT and SRV records. | May assist infrastructure mapping and targeted reconnaissance. | Low |
+| 7 | DNSSEC was reported as unsigned. | WHOIS result and DNSRecon observation. | DNSSEC-based authenticity validation is not indicated by the observed configuration. | Informational |
+| 8 | Two active hosts were discovered in the virtual network. | Nmap host discovery results. | Provides visibility into the laboratory network, but not the hosts' open ports or vulnerabilities. | Informational |
 
-No exploitable vulnerability was confirmed during these exercises.
+### Risk Assessment Notes
 
-## 6. RECOMMENDATIONS
+The priority labels are preliminary indicators of potential security implications.
 
-1. **Keep Software Updated:** Regularly update WordPress, plugins, web server software and other components to supported secure versions.
+The assessment did not include exploitation, authentication testing, configuration review or vulnerability validation.
 
-2. **Review Technology Exposure:** Avoid unnecessarily exposing detailed software version information in public responses.
+Therefore, no confirmed exploitable vulnerability is claimed in this report.
 
-3. **Review DNS Configuration:** Evaluate DNS security settings and consider enabling DNSSEC where appropriate.
+# 8. RECOMMENDATIONS
 
-4. **Secure DNS Services:** Keep DNS software updated and restrict unnecessary DNS information disclosure.
+Based on the observations collected during the practical exercises, the following recommendations are proposed.
 
-5. **Maintain Web Application Firewall Protection:** Continue monitoring and maintaining the detected ModSecurity protection.
+### 8.1 Review Publicly Exposed Technology Information
 
-6. **Review HTTP Security Headers:** Ensure appropriate security headers are configured according to the website's requirements.
+Organizations should periodically review the technologies and software versions exposed by their websites.
 
-7. **Review WordPress Security:** Regularly review installed plugins, user accounts, permissions and available updates.
+Unnecessary information disclosure should be minimized where practical.
 
-8. **Conduct Further Authorized Testing:** Perform additional security assessments only within an explicitly approved scope.
+### 8.2 Maintain Updated Software
 
-9. **Maintain Network Visibility:** Use regular network discovery and asset inventory activities to identify devices connected to authorized networks.
+Content management systems, plugins, frameworks and server software should be maintained with appropriate security updates.
 
-## 7. CONCLUSION
+Detected versions should be checked against reliable security advisories.
 
-The Week 2 practical exercises provided hands-on experience with domain reconnaissance, DNS enumeration, website technology identification and network discovery.
+### 8.3 Review HTTP Security Headers
 
-Using WHOIS, WhatWeb, Nslookup, cURL, WAFW00F and DNSRecon, publicly accessible information about the assigned target domain was collected and documented.
+Website administrators should review HTTP response headers and configure appropriate security headers according to application requirements.
 
-Using Nmap and Zenmap, two active hosts were identified within the Kali Linux VirtualBox virtual network, and a network topology diagram was generated.
+Examples include:
 
-The exercises improved practical understanding of reconnaissance tools, DNS records, HTTP responses, firewall detection and network host discovery.
+- Content-Security-Policy
+- X-Content-Type-Options
+- Strict-Transport-Security
+- Referrer-Policy
 
-No exploitation was performed, and no vulnerability was confirmed during the assessment.
+### 8.4 Review DNS Configuration
 
-## 8. EVIDENCES COLLECTED
+DNS records should be reviewed periodically to ensure that only necessary services and records are publicly exposed.
 
-### 8.1 W2-PM1 – Domain Reconnaissance
+DNSSEC should also be considered where supported and appropriate for the organization's DNS infrastructure.
 
-**Figure 1: WHOIS Domain Information**
+### 8.5 Maintain Web Application Firewall Protection
+
+The detected ModSecurity WAF should be maintained, monitored and configured according to the application's security requirements.
+
+Its effectiveness should be evaluated through authorized testing rather than assumed from detection alone.
+
+### 8.6 Review WordPress Security
+
+Website administrators should regularly review installed plugins, user accounts, permissions, software updates and exposed application endpoints.
+
+### 8.7 Perform Regular Network Discovery
+
+Organizations should periodically perform authorized network discovery to maintain an accurate inventory of active devices.
+
+### 8.8 Investigate Unknown Devices
+
+Unexpected devices discovered during network scans should be identified and verified by the network administrator.
+
+### 8.9 Maintain Network Documentation
+
+Network topology diagrams, IP address assignments and device inventories should be maintained and updated regularly.
+
+### 8.10 Conduct Further Authorized Security Assessments
+
+Reconnaissance and host discovery provide an initial understanding of an environment.
+
+Additional authorized assessments may be required to examine open ports, running services, configurations and potential vulnerabilities.
+
+# 9. LIMITATIONS OF THE ASSESSMENT
+
+The following limitations should be considered when interpreting the results:
+
+1. The reconnaissance exercise relied on information returned by the tools at the time of testing.
+2. Technology identification does not establish the presence of vulnerabilities.
+3. DNS enumeration was limited to the records returned during the exercise.
+4. WAFW00F detection does not establish the effectiveness of the detected firewall.
+5. The Nmap `-sn` scan performed host discovery only; it did not scan ports.
+6. The network scan covered the VirtualBox virtual network and not the physical Wi-Fi LAN.
+7. No exploitation, vulnerability validation or destructive testing was performed.
+
+These limitations define the scope of the conclusions in this report.
+
+# 10. EVIDENCE COLLECTED
+
+The following screenshots and output files were collected to document the practical exercises.
+
+## 10.1 W2-PM1 – FOOTPRINTING AND RECONNAISSANCE
+
+**Figure 1: WHOIS – Domain Registration Information**
 
 ![WHOIS Evidence](W2-PM1/screenshots/01-whois.png)
 
-**Figure 2: WhatWeb Technology Identification**
+**Figure 2: WhatWeb – Website Technology Identification**
 
 ![WhatWeb Evidence](W2-PM1/screenshots/02-whatweb.png)
 
-**Figure 3: Nslookup DNS Resolution**
+**Figure 3: Nslookup – DNS Resolution**
 
 ![Nslookup Evidence](W2-PM1/screenshots/03-nslookup.png)
 
-**Figure 4: cURL HTTP Response Headers**
+**Figure 4: cURL – HTTP Response Headers**
 
 ![cURL Evidence](W2-PM1/screenshots/04-curl.png)
 
-**Figure 5: WAFW00F Firewall Detection**
+**Figure 5: WAFW00F – Web Application Firewall Detection**
 
 ![WAFW00F Evidence](W2-PM1/screenshots/05-wafw00f.png)
 
-**Figure 6: DNSRecon Enumeration**
+**Figure 6: DNSRecon – DNS Enumeration**
 
 ![DNSRecon Evidence](W2-PM1/screenshots/06-dnsrecon.png)
 
-### 8.2 W2-PM5 – Network Scanning
+## 10.2 W2-PM5 – NETWORK SCANNING
 
-**Figure 7: Nmap Host Discovery**
+**Figure 7: Nmap – Kali Virtual Network Host Discovery**
 
-![Nmap Scan Evidence](W2-PM5/screenshots/01-kali-ping-scan.png)
+![Nmap Evidence](W2-PM5/screenshots/01-kali-ping-scan.png)
 
-**Figure 8: Zenmap Network Topology**
+**Figure 8: Zenmap – Network Topology Visualization**
 
-![Zenmap Topology Evidence](W2-PM5/screenshots/02-kali-network-topology.png)
+![Zenmap Evidence](W2-PM5/screenshots/02-kali-network-topology.png)
 
-## 9. AUTHOR AND PROJECT INFORMATION
+### Additional Evidence Files
 
-**Pentester:** MUTSIIRWA MATEMBERA JOSUE
+The following files provide additional technical records:
 
-**Program:** NetworkWalks Cybersecurity Internship
+| File | Description |
+|---|---|
+| `W2-PM1/outputs/whois.txt` | WHOIS domain registration output |
+| `W2-PM1/outputs/whatweb.txt` | Website technology identification output |
+| `W2-PM1/outputs/nslookup.txt` | DNS resolution output |
+| `W2-PM1/outputs/curl.txt` | HTTP response header output |
+| `W2-PM1/outputs/wafw00f.txt` | WAF detection output |
+| `W2-PM1/outputs/dnsrecon.txt` | DNS enumeration output |
+| `W2-PM5/outputs/kali-ping-scan.txt` | Nmap host discovery output |
+| `W2-PM5/outputs/W2-PM5-Network-Topology.pdf` | Generated network topology document |
 
-**Batch:** B084
+# 11. CONCLUSION
 
-**Project:** Week 2 – Penetration Testing
+During Week 2 of the NetworkWalks Cybersecurity Internship, I completed practical exercises covering footprinting, reconnaissance and network scanning.
 
-**LinkedIn:** https://www.linkedin.com/in/josue-matembera-37a269407/
+In W2-PM1, I used six Kali Linux tools to gather information about the `networkwalks.com` domain.
 
-**GitHub Repository:**  
-https://github.com/josuemutsiirwa/NETWORKWALKS-MUTSIIRWA-B084-WK2-PENETRATION-TESTING
+WHOIS helped me understand domain registration information, WhatWeb identified website technologies, Nslookup demonstrated DNS resolution, cURL provided insight into HTTP response headers, WAFW00F identified a web application firewall, and DNSRecon provided additional information about DNS infrastructure.
+
+In W2-PM5, I used Nmap and Zenmap to perform host discovery within my Kali Linux VirtualBox virtual network. I identified two active hosts and generated a network topology document to represent the discovered network environment.
+
+These exercises improved my practical understanding of reconnaissance tools, DNS records, HTTP responses, firewall detection and network host discovery.
+
+I also learned the importance of documenting commands, preserving evidence, interpreting results carefully and distinguishing between an observation and a confirmed security vulnerability.
+
+Finally, these practical activities reinforced the importance of conducting cybersecurity assessments responsibly and only within an authorized scope.
+
+# 12. AUTHOR AND PROJECT INFORMATION
+
+| Information | Details |
+|---|---|
+| Pentester | MUTSIIRWA MATEMBERA JOSUE |
+| Program | NetworkWalks Cybersecurity Internship |
+| Batch | B084 |
+| Project | Week 2 – Penetration Testing |
+| Modules | W2-PM1 and W2-PM5 |
+
+**LinkedIn:** [Josue Matembera](https://www.linkedin.com/in/josue-matembera-37a269407/)
+
+**GitHub:** [josuemutsiirwa](https://github.com/josuemutsiirwa)
+
+**Project Repository:**
+
+[NETWORKWALKS-MUTSIIRWA-B084-WK2-PENETRATION-TESTING](https://github.com/josuemutsiirwa/NETWORKWALKS-MUTSIIRWA-B084-WK2-PENETRATION-TESTING)
 
 ---
+
+<div align="center">
+
+**NETWORKWALKS CYBERSECURITY INTERNSHIP**
+
+**WEEK 02 – PENETRATION TESTING**
+
+*Learning • Practicing • Securing*
+
+---
+
+**END OF REPORT**
+
+</div>
